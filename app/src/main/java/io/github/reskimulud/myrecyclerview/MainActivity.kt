@@ -9,14 +9,19 @@ import io.github.reskimulud.myrecyclerview.data.AlbumData.listData
 
 class MainActivity : AppCompatActivity() {
     private lateinit var listAdapter: ListAlbumAdapter
+    private lateinit var rvAlbums: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         listAdapter = ListAlbumAdapter()
+        rvAlbums = findViewById(R.id.rv_albums)
 
-        val rvAlbums: RecyclerView = findViewById(R.id.rv_albums)
+        showRecyclerList()
+    }
+
+    private fun showRecyclerList() {
         rvAlbums.layoutManager = LinearLayoutManager(this)
         rvAlbums.adapter = listAdapter
 
