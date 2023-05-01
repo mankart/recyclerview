@@ -1,4 +1,4 @@
-package io.github.reskimulud.myrecyclerview.adapter
+package io.github.reskimulud.myrecyclerview.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +10,9 @@ import com.bumptech.glide.Glide
 import io.github.reskimulud.myrecyclerview.R
 import io.github.reskimulud.myrecyclerview.model.Album
 
-class ListAlbumAdapter: RecyclerView.Adapter<ListAlbumAdapter.ViewHolder>() {
+class ListAlbumAdapter(
+    private val onItemClicked: (albumId: Int) -> Unit,
+): RecyclerView.Adapter<ListAlbumAdapter.ViewHolder>() {
     private val listAlbum: ArrayList<Album> = arrayListOf()
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
@@ -41,6 +43,10 @@ class ListAlbumAdapter: RecyclerView.Adapter<ListAlbumAdapter.ViewHolder>() {
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val data = listAlbum[position]
         holder.bind(data)
+
+        holder.itemView.setOnClickListener {
+            onItemClicked(data.id)
+        }
     }
 
     fun setData(data: ArrayList<Album>) {
