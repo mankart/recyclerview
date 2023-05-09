@@ -1,4 +1,4 @@
-package io.github.reskimulud.myrecyclerview.adapter
+package io.github.reskimulud.myrecyclerview.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.View
