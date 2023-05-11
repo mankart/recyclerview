@@ -3,6 +3,7 @@ package io.github.reskimulud.myrecyclerview.ui.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import io.github.reskimulud.myrecyclerview.data.AlbumRepository
+import io.github.reskimulud.myrecyclerview.injection.Injection
 
 @Suppress("UNCHECKED_CAST")
 class ViewModelFactory(private val repository: AlbumRepository): ViewModelProvider.NewInstanceFactory() {
@@ -15,6 +16,21 @@ class ViewModelFactory(private val repository: AlbumRepository): ViewModelProvid
                 DetailAlbumViewModel(repository) as T
             }
             else -> throw IllegalArgumentException("ViewModel tidak ditemukan")
+        }
+    }
+
+    companion object {
+        @Volatile
+        private var INSTANCE: ViewModelFactory? = null
+
+        @JvmStatic
+        fun getInstance(): ViewModelFactory {
+            return INSTANCE ?: synchronized(this) {
+                val repository = Injection.provideRepository()
+                val instance = ViewModelFactory(repository)
+                INSTANCE = instance
+                instance
+            }
         }
     }
 }
