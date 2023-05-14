@@ -10,4 +10,18 @@ class AlbumRepository(private val albums: ArrayList<Album>) {
     fun getAlbumById(albumId: Int): Album {
         return albums.filter { it.id == albumId }[0]
     }
+
+    companion object {
+        @Volatile
+        private var INSTANCE: AlbumRepository? = null
+
+        @JvmStatic
+        fun getInstance(albums: ArrayList<Album>): AlbumRepository {
+            return INSTANCE ?: synchronized(this) {
+                val instance = AlbumRepository(albums)
+                INSTANCE = instance
+                instance
+            }
+        }
+    }
 }
